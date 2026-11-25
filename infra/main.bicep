@@ -91,7 +91,7 @@ module aiFoundry './modules/ai-foundry.bicep' = {
     name: '${abbrs.aiFoundry}${resourceToken}'
     location: location
     tags: tags
-    appInsightsInstrumentationKey: monitoring.outputs.appInsightsInstrumentationKey
+    appInsightsConnectionString: monitoring.outputs.appInsightsConnectionString
     appInsightsResourceId: monitoring.outputs.appInsightsResourceId
     deploymentName: azureOpenAIDeploymentName
     deploymentSkuName: deploymentSkuName

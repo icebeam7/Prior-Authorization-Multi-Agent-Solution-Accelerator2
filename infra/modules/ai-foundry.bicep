@@ -15,9 +15,9 @@ param location string
 @description('Tags for all resources')
 param tags object = {}
 
-@description('Application Insights instrumentation key — used to link this Foundry project to App Insights so the Foundry portal Traces view works')
+@description('Application Insights connection string — used to link this Foundry project to App Insights so the Foundry portal Traces view works')
 @secure()
-param appInsightsInstrumentationKey string
+param appInsightsConnectionString string
 
 @description('Application Insights resource ID — the target resource for the AppInsights connection')
 param appInsightsResourceId string
@@ -83,7 +83,14 @@ resource appInsightsConnection 'Microsoft.CognitiveServices/accounts/projects/co
     target: appInsightsResourceId
     authType: 'ApiKey'
     credentials: {
-      key: appInsightsInstrumentationKey
+      key: appInsightsConnectionString
+    }
+    // AppInsights-category connections REQUIRE metadata.ResourceId; without it
+    // the deployment fails with "Required metadata property ResourceId is
+    // missing (Code: ValidationError)".
+    metadata: {
+      ApiType: 'Azure'
+      ResourceId: appInsightsResourceId
     }
   }
 }
